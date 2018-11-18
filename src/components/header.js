@@ -19,7 +19,6 @@ import { connect } from 'react-redux';
                   <li className="nav-item"  key={2}>
                       <Link to="/signup" className="nav-link" >Sign Up</Link>
                   </li>
-
               ]
           }
       }
@@ -27,6 +26,7 @@ import { connect } from 'react-redux';
          return (
              <nav className="navbar navbar-light">
                  <ul className="nav navbar-nav">
+                         <Link to="/" className="navbar-brand">AuthClient App</Link>
                      { this.renderLinks() }
                  </ul>
              </nav>

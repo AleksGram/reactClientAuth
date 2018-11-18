@@ -6,12 +6,12 @@ import * as actions from '../../actions';
 import { withRouter } from 'react-router-dom';
 
  class Signin extends Component {
+
      handleFormSubmit = ({ email, password }) => {
-         console.log(email, password);
-         this.props.signinUser({ email, password }, this.props.history);
+         this.props.signinUser({ email, password }, this.props);
      };
      renderAlert () {
-         if (this.props.errorMessage) {
+         if (this.props.errorMessage ) {
              return (
                  <div className='alert alert-danger'>
                      <strong>Oops! </strong> {this.props.errorMessage}
@@ -51,7 +51,7 @@ import { withRouter } from 'react-router-dom';
 }
 
 function mapStateToProps (state) {
-    return { errorMessage: state.auth.error }
+    return { errorMessage: state.auth.error, auth: state.auth }
 }
 export default  compose(
     withRouter,
