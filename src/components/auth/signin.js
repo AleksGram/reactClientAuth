@@ -21,6 +21,7 @@ import { withRouter } from 'react-router-dom';
      }
     render () {
         const { handleSubmit} = this.props;
+        console.log(this);
         return (
             <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
                 <fieldset className="form-group">
