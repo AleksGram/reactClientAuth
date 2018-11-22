@@ -6,14 +6,14 @@ import * as actions from '../../actions';
 import { withRouter } from 'react-router-dom';
 
 class SignUp extends Component {
-    handleFormSubmit = () => {
-
+    handleFormSubmit = (formProps) => {
+        this.props.signupUser(formProps);
     };
 
     renderField = ({ input, type, meta: { touched, error } }) => (
         <div>
             <input {...input} type={type} className="form-control"/>
-            {touched && ( <span>{error}</span>)}
+            {touched && ( <span className="fieldError">{error}</span>)}
         </div>
     );
     render () {
@@ -26,7 +26,7 @@ class SignUp extends Component {
                         className="form-control"
                         name="email"
                         type="text"
-                        component="input"
+                        component={this.renderField}
                         autoComplete="none"
                     />
                 </fieldset>
@@ -36,7 +36,7 @@ class SignUp extends Component {
                         className="form-control"
                         name="password"
                         type="password"
-                        component="input"
+                        component={this.renderField}
                         autoComplete="none"
                     />
                 </fieldset>
@@ -56,16 +56,22 @@ class SignUp extends Component {
         )
     }
 }
+
 function validate (formProps) {
     const errors = {};
-
+    const fields = ['email', 'password', 'confirmPassword'];
+    fields.map((field) => {
+        if (!formProps[field]) {
+            errors[field] = `${field} is required`
+        }
+    });
     if(formProps.password !== formProps.confirmPassword) {
         errors.confirmPassword = 'Password should much'
     }
     return errors;
 }
 
-export default  compose(
+export default  compose (
     withRouter,
     connect (null, actions),
     reduxForm ({ form: 'signin', validate }),

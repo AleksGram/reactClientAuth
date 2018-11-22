@@ -24,6 +24,12 @@ export function signinUser ({ email, password }, props) {
             )
     }
 }
+export function signupUser ({ email, password }, props) {
+    return function (dispatch) {
+        axios.post(`${ROOT_URL}/signin`, { email, password })
+    }
+}
+
 export function signoutUser() {
     localStorage.removeItem('token');
     return { type: UNAUTH_USER };
