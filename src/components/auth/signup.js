@@ -7,8 +7,18 @@ import { withRouter } from 'react-router-dom';
 
 class SignUp extends Component {
     handleFormSubmit = (formProps) => {
-        this.props.signupUser(formProps);
+        this.props.signupUser(formProps, this.props);
     };
+
+    renderAlert () {
+        if (this.props.errorMessage ) {
+            return (
+                <div className='alert alert-danger'>
+                    <strong>Oops! </strong> {this.props.errorMessage}
+                </div>
+            )
+        }
+    }
 
     renderField = ({ input, type, meta: { touched, error } }) => (
         <div>
@@ -50,6 +60,7 @@ class SignUp extends Component {
                         autoComplete="none"
                     />
                 </fieldset>
+                {this.renderAlert()}
                 <button formAction="submit" className="btn btn-primary">Sign Up</button>
             </form>
 
@@ -71,8 +82,11 @@ function validate (formProps) {
     return errors;
 }
 
+function mapStateToProps (state) {
+    return { errorMessage: state.auth.error }
+}
 export default  compose (
     withRouter,
-    connect (null, actions),
+    connect (mapStateToProps, actions),
     reduxForm ({ form: 'signin', validate }),
 ) (SignUp);

@@ -21,7 +21,6 @@ import { withRouter } from 'react-router-dom';
      }
     render () {
         const { handleSubmit} = this.props;
-        console.log(this);
         return (
             <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
                 <fieldset className="form-group">
@@ -52,7 +51,7 @@ import { withRouter } from 'react-router-dom';
 }
 
 function mapStateToProps (state) {
-    return { errorMessage: state.auth.error, auth: state.auth }
+    return { errorMessage: state.auth.error }
 }
 export default  compose(
     withRouter,

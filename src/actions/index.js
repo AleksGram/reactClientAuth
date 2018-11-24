@@ -16,7 +16,6 @@ export function signinUser ({ email, password }, props) {
                 props.history.push('/feature');
             })
             .catch(function (error) {
-                    console.log(error);
                     if (error.response) {
                     dispatch(authError('Login data error'))
                 }
@@ -26,7 +25,17 @@ export function signinUser ({ email, password }, props) {
 }
 export function signupUser ({ email, password }, props) {
     return function (dispatch) {
-        axios.post(`${ROOT_URL}/signin`, { email, password })
+        axios.post(`${ROOT_URL}/signup`, { email, password })
+            .then(response => {
+                dispatch({type: AUTH_USER});
+                localStorage.setItem('token', response.data.token);
+                props.history.push('/feature');
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    dispatch(authError(error.response.data.error))
+                }
+            });
     }
 }
 
